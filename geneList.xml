@@ -1,0 +1,119 @@
+<tool id="geneList" name="Create GeneList Outputs" version="0.63">
+    <description>Create GeneList Outputs</description>
+<!--
+    <requirements>
+       <requirement type="package" version="0.11.2">FastQC</requirement>
+    </requirements>
+-->
+
+<!--
+    <stdio>
+        <exit_code range="1:" />
+        <exit_code range=":-1" />
+        <regex match="Error:" />
+        <regex match="Exception:" />
+    </stdio>
+-->
+    <command interpreter="sh">
+    geneList.sh $input_file $gene $list $anno_txt $kegg
+    </command>
+    <inputs>
+        <param format="sam" name="input_file" type="data" label="SAM File from Bowtie2 against IGC" />
+    </inputs>
+    <outputs>
+        <data format="txt" name="gene" label="${tool.name} on ${on_string}: GeneList" />
+        <data format="kegg" name="kegg" label="${tool.name} on ${on_string}: KeggList" />
+        <data format="list" name="list" label="${tool.name} on ${on_string}: List" />
+        <data format="txt" name="anno_txt"  label="${tool.name} on ${on_string}: Annotations" />
+    </outputs>
+<!--
+    <tests>
+        <test>
+            <param name="input_file" value="1000gsample.fastq" />
+            <param name="contaminants" value="fastqc_contaminants.txt" ftype="tabular" />
+            <output name="html_file" file="fastqc_report.html" ftype="html" lines_diff="100"/>
+            <output name="text_file" file="fastqc_data.txt" ftype="txt" lines_diff="100"/>
+        </test>
+        <test>
+            <param name="input_file" value="1000gsample.fastq" />
+            <param name="limits" value="fastqc_customlimits.txt" ftype="txt" />
+            <output name="html_file" file="fastqc_report2.html" ftype="html" lines_diff="100"/>
+            <output name="text_file" file="fastqc_data2.txt" ftype="txt" lines_diff="100"/>
+        </test>
+    </tests>
+-->
+    <help>
+.. class:: infomark
+
+**Purpose**
+
+This tool is designed to take the SAM file from the Bowtie tool and parse out the data into 4 different files. 
+
+
+<!--
+FastQC aims to provide a simple way to do some quality control checks on raw
+sequence data coming from high throughput sequencing pipelines. 
+It provides a modular set of analyses which you can use to give a quick
+impression of whether your data has any problems of 
+which you should be aware before doing any further analysis.
+
+The main functions of FastQC are:
+
+- Import of data from BAM, SAM or FastQ files (any variant)
+- Providing a quick overview to tell you in which areas there may be problems
+- Summary graphs and tables to quickly assess your data
+- Export of results to an HTML based permanent report
+- Offline operation to allow automated generation of reports without running the interactive application
+-->
+
+-----
+
+
+.. class:: infomark
+
+**geneList.sh**
+
+This is a Galaxy wrapper. It merely exposes the external package geneList.sh
+Kindly acknowledge it as well as this tool if you use it.
+
+-----
+
+.. class:: infomark
+
+**Inputs and outputs**
+
+The Input is a SAM file from the Bowtie Tool against the IGC genome file.
+
+The output files are a .gene file, a .kegg file, a .list file and a .txt file with annotations.
+
+
+<!--
+FastQC_ is the best place to look for documentation - it's very good. 
+A summary follows below for those in a tearing hurry.
+
+This wrapper will accept a Galaxy fastq, sam or bam as the input read file to check.
+It will also take an optional file containing a list of contaminants information, in the form of
+a tab-delimited file with 2 columns, name and sequence. As another option the tool takes a custom
+limits.txt file that allows setting the warning thresholds for the different modules and also specifies
+which modules to include in the output.
+
+The tool produces a basic text and a HTML output file that contain all of the results, including the following:
+
+- Basic Statistics
+- Per base sequence quality
+- Per sequence quality scores
+- Per base sequence content
+- Per base GC content
+- Per sequence GC content
+- Per base N content
+- Sequence Length Distribution
+- Sequence Duplication Levels
+- Overrepresented sequences
+- Kmer Content
+
+All except Basic Statistics and Overrepresented sequences are plots.
+ .. _FastQC: http://www.bioinformatics.bbsrc.ac.uk/projects/fastqc/
+ .. _Picard-tools: http://picard.sourceforge.net/index.shtml
+-->
+    </help>
+</tool>

@@ -1,0 +1,116 @@
+<tool id="countKeggs" name="Count Keggs" version="0.63">
+    <description>Count Keggs</description>
+<!--
+    <requirements>
+       <requirement type="package" version="0.11.2">FastQC</requirement>
+    </requirements>
+-->
+
+<!--
+    <stdio>
+        <exit_code range="1:" />
+        <exit_code range=":-1" />
+        <regex match="Error:" />
+        <regex match="Exception:" />
+    </stdio>
+-->
+    <command interpreter="python">
+    countKegg.py 
+	 $input_file $kegg_count
+    </command>
+    <inputs>
+        <param format="txt" name="input_file" type="data" label="Gene File from GeneList Tool" />
+    </inputs>
+    <outputs>
+	<data format="txt" name="kegg_count" label="${tool.name} on ${on_string}: KeggCount" />
+    </outputs>
+<!--
+    <tests>
+        <test>
+            <param name="input_file" value="1000gsample.fastq" />
+            <param name="contaminants" value="fastqc_contaminants.txt" ftype="tabular" />
+            <output name="html_file" file="fastqc_report.html" ftype="html" lines_diff="100"/>
+            <output name="text_file" file="fastqc_data.txt" ftype="txt" lines_diff="100"/>
+        </test>
+        <test>
+            <param name="input_file" value="1000gsample.fastq" />
+            <param name="limits" value="fastqc_customlimits.txt" ftype="txt" />
+            <output name="html_file" file="fastqc_report2.html" ftype="html" lines_diff="100"/>
+            <output name="text_file" file="fastqc_data2.txt" ftype="txt" lines_diff="100"/>
+        </test>
+    </tests>
+-->
+    <help>
+.. class:: infomark
+
+**Purpose**
+
+This tool combines the read counts from all genes that map to the same KEGG IDs and produces a sorted list of KEGG IDs.
+
+<!--
+FastQC aims to provide a simple way to do some quality control checks on raw
+sequence data coming from high throughput sequencing pipelines. 
+It provides a modular set of analyses which you can use to give a quick
+impression of whether your data has any problems of 
+which you should be aware before doing any further analysis.
+
+The main functions of FastQC are:
+
+- Import of data from BAM, SAM or FastQ files (any variant)
+- Providing a quick overview to tell you in which areas there may be problems
+- Summary graphs and tables to quickly assess your data
+- Export of results to an HTML based permanent report
+- Offline operation to allow automated generation of reports without running the interactive application
+-->
+
+-----
+
+
+.. class:: infomark
+
+**countKegg.py**
+
+This is a Galaxy wrapper. It merely exposes the external package countKegg.py
+Kindly acknowledge it as well as this tool if you use it.
+
+-----
+
+.. class:: infomark
+
+**Inputs and outputs**
+
+The Input is the .gene file from the geneList.sh tool.
+
+The Output file is a kegg count file.
+
+
+<!--
+FastQC_ is the best place to look for documentation - it's very good. 
+A summary follows below for those in a tearing hurry.
+
+This wrapper will accept a Galaxy fastq, sam or bam as the input read file to check.
+It will also take an optional file containing a list of contaminants information, in the form of
+a tab-delimited file with 2 columns, name and sequence. As another option the tool takes a custom
+limits.txt file that allows setting the warning thresholds for the different modules and also specifies
+which modules to include in the output.
+
+The tool produces a basic text and a HTML output file that contain all of the results, including the following:
+
+- Basic Statistics
+- Per base sequence quality
+- Per sequence quality scores
+- Per base sequence content
+- Per base GC content
+- Per sequence GC content
+- Per base N content
+- Sequence Length Distribution
+- Sequence Duplication Levels
+- Overrepresented sequences
+- Kmer Content
+
+All except Basic Statistics and Overrepresented sequences are plots.
+ .. _FastQC: http://www.bioinformatics.bbsrc.ac.uk/projects/fastqc/
+ .. _Picard-tools: http://picard.sourceforge.net/index.shtml
+-->
+    </help>
+</tool>
