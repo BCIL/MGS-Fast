@@ -12,5 +12,4 @@ https://galaxyproject.org/toolshed/publish-tool/
 **The container with the MGS-Fast pipeline and Galaxy interface as described in the manuscript is available as a Docker container:**
 
 https://hub.docker.com/r/bcil/metagenome/tags/
-
 _Container: bcil/metagenome:nyu_4.0_
